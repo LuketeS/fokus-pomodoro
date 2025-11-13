@@ -9,12 +9,13 @@ const startPauseBtn = document.querySelector("#start-pause");
 const timer = document.querySelector(".app__card-timer");
 const appImage = document.querySelector(".app__image");
 const appText = document.querySelector(".app__title");
+const startPauseBtnText = document.querySelector("#start-pause span")
 
 const musicInput = document.querySelector("#alternar-musica");
 const music = new Audio("/sons/luna-rise-part-one.mp3");
-const playSound = new Audio("/sons/play.wav")
-const pauseSound = new Audio("/sons/pause.mp3")
-const finishSound = new Audio("/sons/beep.mp3")
+const playSound = new Audio("/sons/play.wav");
+const pauseSound = new Audio("/sons/pause.mp3");
+const finishSound = new Audio("/sons/beep.mp3");
 music.loop = true;
 
 let tempoDecorridoEmSegundos = 5;
@@ -80,9 +81,9 @@ musicInput.addEventListener("change", () => {
 
 const timerDecreaser = () => {
     if(tempoDecorridoEmSegundos <= 0){
-        timerClear();
         finishSound.play();
-        alert("Acabou o tempo!")        
+        alert("Acabou o tempo!");
+        timerClear();        
         return;
     }
     tempoDecorridoEmSegundos -= 1;
@@ -92,9 +93,11 @@ const timerDecreaser = () => {
 function startOrPause () {
     if(intervaloId){
         pauseSound.play()
+        startPauseBtnText.textContent ="Começar";
         timerClear();        
         return;
     }
+    startPauseBtnText.textContent ="Pausar";
     playSound.play();
     intervaloId = setInterval(timerDecreaser, 1000)
 }
