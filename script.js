@@ -9,7 +9,9 @@ const startPauseBtn = document.querySelector("#start-pause");
 const timer = document.querySelector(".app__card-timer");
 const appImage = document.querySelector(".app__image");
 const appText = document.querySelector(".app__title");
-const startPauseBtnText = document.querySelector("#start-pause span")
+const startPauseBtnText = document.querySelector("#start-pause span");
+const startPauseBtnImg = document.querySelector(".app__card-primary-butto-icon");
+const screenTimer = document.querySelector("#timer");
 
 const musicInput = document.querySelector("#alternar-musica");
 const music = new Audio("/sons/luna-rise-part-one.mp3");
@@ -18,23 +20,29 @@ const pauseSound = new Audio("/sons/pause.mp3");
 const finishSound = new Audio("/sons/beep.mp3");
 music.loop = true;
 
-let tempoDecorridoEmSegundos = 5;
+let elapsedTimerInSeconds = 1500;
 let intervaloId = null;
 let duracaoFoco = 1500; 
 let duracaoDescansoCurto = 300; 
 let duracaoDescansoLongo = 900; 
 
 focoBtn.addEventListener("click", () => {
+    elapsedTimerInSeconds = 1500;
+    showTimer();
     contextoChanger("foco");
     focoBtn.classList.add("active");
 })
 
 curtoBtn.addEventListener("click", () => {
+    elapsedTimerInSeconds = 300;
+    showTimer();
     contextoChanger("descanso-curto");
     curtoBtn.classList.add("active");
 })
 
 longoBtn.addEventListener("click", () => {
+    elapsedTimerInSeconds = 900;
+    showTimer();
     contextoChanger("descanso-longo");
     longoBtn.classList.add("active");
 })
@@ -80,24 +88,26 @@ musicInput.addEventListener("change", () => {
 })
 
 const timerDecreaser = () => {
-    if(tempoDecorridoEmSegundos <= 0){
+    if(elapsedTimerInSeconds <= 0){
         finishSound.play();
         alert("Acabou o tempo!");
         timerClear();        
         return;
     }
-    tempoDecorridoEmSegundos -= 1;
-    console.log("Tempo Restante: " + tempoDecorridoEmSegundos)
+    elapsedTimerInSeconds -= 1;
+    showTimer();
 }
 
 function startOrPause () {
     if(intervaloId){
         pauseSound.play()
         startPauseBtnText.textContent ="Começar";
+        startPauseBtnImg.setAttribute("src", "/imagens/play_arrow.png");        
         timerClear();        
         return;
     }
     startPauseBtnText.textContent ="Pausar";
+    startPauseBtnImg.setAttribute("src", "/imagens/pause.png");
     playSound.play();
     intervaloId = setInterval(timerDecreaser, 1000)
 }
@@ -108,3 +118,11 @@ function timerClear() {
     clearInterval(intervaloId);
     intervaloId = null
 }
+
+function showTimer() {
+    let time = new Date(elapsedTimerInSeconds*1000);
+    let formatedTime = time.toLocaleTimeString('pt-br', {minute:"2-digit", second:"2-digit"});
+    screenTimer.innerHTML = `${formatedTime}`;
+}
+
+showTimer();
