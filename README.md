@@ -4,6 +4,9 @@ Uma aplicação web desenvolvida com JavaScript, HTML e CSS que ajuda o usuário
 
 A ferramenta oferece três modos de temporização — Foco, Descanso Curto e Descanso Longo — permitindo alternar facilmente entre eles e controlar o ciclo de estudos ou trabalho.
 
+![Amostra do Projeto Fokus](https://github.com/user-attachments/assets/b9ba746e-6e53-4e31-bb88-cb1e332c3b02)
+
+
 ## 🚀 Funcionalidades
 
 ✔️ Seleção entre três tipos de timer:
